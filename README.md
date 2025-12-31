@@ -476,5 +476,622 @@ class Solution:
         return k
 
 
+# 10 Problem 
+# 35. Search Insert Position
+Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
 
-       
+You must write an algorithm with O(log n) runtime complexity.
+
+Example 1:
+
+Input: nums = [1,3,5,6], target = 5
+Output: 2
+Example 2:
+
+Input: nums = [1,3,5,6], target = 2
+Output: 1
+Example 3:
+
+Input: nums = [1,3,5,6], target = 7
+Output: 4
+ 
+
+Constraints:
+
+1 <= nums.length <= 104
+-104 <= nums[i] <= 104
+nums contains distinct values sorted in ascending order.
+-104 <= target <= 104
+
+# Answer
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return left
+
+
+  # 11 Problem
+ # 94. Binary Tree Inorder Traversal
+ Link: https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+ Given the root of a binary tree, return the inorder traversal of its nodes' values 
+
+Example 1:
+
+Input: root = [1,null,2,3]
+
+Output: [1,3,2]
+
+Explanation:
+
+Example 2:
+
+Input: root = [1,2,3,4,5,null,8,null,null,6,7,9]
+
+Output: [4,2,6,5,7,1,3,9,8]
+
+Explanation:
+
+Example 3:
+
+Input: root = []
+
+Output: []
+
+Example 4:
+
+Input: root = [1]
+
+Output: [1]
+
+ 
+Constraints:
+
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+
+
+# Answer
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        def inorder(root):
+            if not root:
+                return
+            inorder(root.left)
+            res.append(root.val)
+            inorder(root.right)
+        inorder(root)
+        return res
+
+
+
+ # 12 Problem
+ # 121. Best Time to Buy and Sell Stock
+ You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+Example 1:
+
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+Example 2:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+ 
+Constraints:
+
+1 <= prices.length <= 105
+0 <= prices[i] <= 104
+
+# Answer
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+
+        min_price = float('inf')
+        max_profit = 0
+        
+        for price in prices:
+            if price < min_price:
+                min_price = price
+
+            profit = price - min_price
+
+            if profit > max_profit:
+                max_profit = profit
+
+        return max_profit
+
+
+
+# 13 Problem
+# 125. Valid Palindrome
+
+A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+
+Given a string s, return true if it is a palindrome, or false otherwise.
+
+ 
+
+Example 1:
+
+Input: s = "A man, a plan, a canal: Panama"
+Output: true
+Explanation: "amanaplanacanalpanama" is a palindrome.
+Example 2:
+
+Input: s = "race a car"
+Output: false
+Explanation: "raceacar" is not a palindrome.
+Example 3:
+
+Input: s = " "
+Output: true
+Explanation: s is an empty string "" after removing non-alphanumeric characters.
+Since an empty string reads the same forward and backward, it is a palindrome.
+ 
+
+Constraints:
+
+1 <= s.length <= 2 * 105
+s consists only of printable ASCII characters.
+
+# Answer
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        left = 0
+        right = len(s)-1
+
+        while left < right:
+
+        # Move left pointer if not alphanumeric
+            while left < right and not s[left].isalnum():
+                left += 1
+
+        # Move right pointer if not alphanumeric
+            while left < right and not s[right].isalnum():
+                right -= 1
+
+        # Compare characters (case-insensitive)
+            if s[left].lower() != s[right].lower():
+                return False
+
+        # Move both pointers inward   
+            left += 1
+            right -= 1
+
+        return True         
+
+
+# 14 problem
+# 144. Binary Tree Preorder Traversal
+Link: https://leetcode.com/problems/binary-tree-preorder-traversal/description/
+Given the root of a binary tree, return the preorder traversal of its nodes' values.
+
+ 
+
+Example 1:
+
+Input: root = [1,null,2,3]
+
+Output: [1,2,3]
+
+Explanation:
+
+
+
+Example 2:
+
+Input: root = [1,2,3,4,5,null,8,null,null,6,7,9]
+
+Output: [1,2,4,5,6,7,3,8,9]
+
+Explanation:
+
+
+
+Example 3:
+
+Input: root = []
+
+Output: []
+
+Example 4:
+
+Input: root = [1]
+
+Output: [1]
+
+ 
+
+Constraints:
+
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+
+
+# Answer
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        def preorder(root):
+            if not root:
+                return
+            res.append(root.val)
+            preorder(root.left)
+            preorder(root.right)
+        preorder(root)
+        return res
+
+
+# 15 problem
+# 145. Binary Tree Postorder Traversal
+Given the root of a binary tree, return the postorder traversal of its nodes' values.
+
+ 
+
+Example 1:
+
+Input: root = [1,null,2,3]
+
+Output: [3,2,1]
+
+Explanation:
+
+
+
+Example 2:
+
+Input: root = [1,2,3,4,5,null,8,null,null,6,7,9]
+
+Output: [4,6,7,5,2,9,8,3,1]
+
+Explanation:
+
+
+
+Example 3:
+
+Input: root = []
+
+Output: []
+
+Example 4:
+
+Input: root = [1]
+
+Output: [1]
+
+ 
+
+Constraints:
+
+The number of the nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+
+# Answer
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        
+        def postorder(node):
+            if not node:
+                return
+            postorder(node.left)
+            postorder(node.right)
+            res.append(node.val)  # Fix is here
+
+        postorder(root)
+        return res
+        
+# 16 problem
+# 167. Two Sum II - Input Array Is Sorted
+Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number. Let these two numbers be numbers[index1] and numbers[index2] where 1 <= index1 < index2 <= numbers.length.
+
+Return the indices of the two numbers, index1 and index2, added by one as an integer array [index1, index2] of length 2.
+
+The tests are generated such that there is exactly one solution. You may not use the same element twice.
+
+Your solution must use only constant extra space.
+
+ 
+
+Example 1:
+
+Input: numbers = [2,7,11,15], target = 9
+Output: [1,2]
+Explanation: The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We return [1, 2].
+Example 2:
+
+Input: numbers = [2,3,4], target = 6
+Output: [1,3]
+Explanation: The sum of 2 and 4 is 6. Therefore index1 = 1, index2 = 3. We return [1, 3].
+Example 3:
+
+Input: numbers = [-1,0], target = -1
+Output: [1,2]
+Explanation: The sum of -1 and 0 is -1. Therefore index1 = 1, index2 = 2. We return [1, 2].
+ 
+
+Constraints:
+
+2 <= numbers.length <= 3 * 104
+-1000 <= numbers[i] <= 1000
+numbers is sorted in non-decreasing order.
+-1000 <= target <= 1000
+The tests are generated such that there is exactly one solution.
+
+# Answer
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        left =0
+        right =len(numbers)-1
+
+        while left < right:
+            sum = numbers[left] + numbers[right]
+            
+            if sum == target:
+                return[left+1, right+1]
+
+            if sum < target:
+                left+= 1
+            else:
+                right-= 1    
+
+
+# 17 problem
+# 214. Shortest Palindrome
+You are given a string s. You can convert s to a palindrome by adding characters in front of it.
+
+Return the shortest palindrome you can find by performing this transformation.
+
+
+Example 1:
+
+Input: s = "aacecaaa"
+Output: "aaacecaaa"
+Example 2:
+
+Input: s = "abcd"
+Output: "dcbabcd"
+ 
+
+Constraints:
+
+0 <= s.length <= 5 * 104
+s consists of lowercase English letters only.
+
+ # answer
+ class Solution:
+    def shortestPalindrome(self, s: str) -> str:
+        if not s:
+            return s
+        
+        for i in range(len(s), -1, -1):
+            if s[:i] == s[:i][::-1]:  # Check if prefix is a palindrome
+                suffix = s[i:]       # Remaining suffix
+                return suffix[::-1] + s  # Add reversed suffix to front
+        return ""
+
+
+# 18 problem
+# 217. Contains Duplicate
+Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+
+Example 1:
+
+Input: nums = [1,2,3,1]
+
+Output: true
+
+Explanation:
+
+The element 1 occurs at the indices 0 and 3.
+
+Example 2:
+
+Input: nums = [1,2,3,4]
+
+Output: false
+
+Explanation:
+
+All elements are distinct.
+
+Example 3:
+
+Input: nums = [1,1,1,3,3,4,3,2,4,2]
+
+Output: true
+
+
+Constraints:
+
+1 <= nums.length <= 105
+-109 <= nums[i] <= 109
+
+
+# Answer
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        res=set()
+        for num in nums:
+            if num in res:
+                return True
+            res.add(num)
+        return False
+
+
+
+# 19 Problem
+# 219. Contains Duplicate II
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+Example 1:
+
+Input: nums = [1,2,3,1], k = 3
+Output: true
+Example 2:
+
+Input: nums = [1,0,1,1], k = 1
+Output: true
+Example 3:
+
+Input: nums = [1,2,3,1,2,3], k = 2
+Output: false
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+-109 <= nums[i] <= 109
+0 <= k <= 105
+
+# Answer
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        window = set()
+        for i in range(len(nums)):
+            if nums[i] in window:
+                return True
+
+            window.add(nums[i])
+
+            # Keep window size ≤ k
+            if len(window) > k:
+                window.remove(nums[i-k])
+        return False        
+            
+
+
+# 20 Problem
+# 509. Fibonacci Number
+The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,
+
+F(0) = 0, F(1) = 1
+F(n) = F(n - 1) + F(n - 2), for n > 1.
+Given n, calculate F(n).
+
+ 
+
+Example 1:
+
+Input: n = 2
+Output: 1
+Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.
+Example 2:
+
+Input: n = 3
+Output: 2
+Explanation: F(3) = F(2) + F(1) = 1 + 1 = 2.
+Example 3:
+
+Input: n = 4
+Output: 3
+Explanation: F(4) = F(3) + F(2) = 2 + 1 = 3.
+ 
+
+Constraints:
+
+0 <= n <= 30
+ 
+# Answer
+class Solution:
+    def fib(self, n: int) -> int:
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        return self.fib(n-2) + self.fib(n-1)
+
+
+        
+# 21 Problem
+# 704. Binary Search
+Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+
+Example 1:
+
+Input: nums = [-1,0,3,5,9,12], target = 9
+Output: 4
+Explanation: 9 exists in nums and its index is 4
+Example 2:
+
+Input: nums = [-1,0,3,5,9,12], target = 2
+Output: -1
+Explanation: 2 does not exist in nums so return -1
+ 
+
+Constraints:
+
+1 <= nums.length <= 104
+-104 < nums[i], target < 104
+All the integers in nums are unique.
+nums is sorted in ascending order.
+
+
+# Answer
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        low = 0
+        high = len(nums) - 1
+        
+        while low <= high:
+            mid = (low + high) // 2
+            
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                low = mid + 1
+            else:
+                high = mid - 1
+                
+        return -1
+
+
+
+  
